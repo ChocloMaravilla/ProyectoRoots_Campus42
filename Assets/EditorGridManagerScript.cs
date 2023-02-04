@@ -2,6 +2,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EditorGridManagerScript : MonoBehaviour
 {
@@ -12,6 +13,14 @@ public class EditorGridManagerScript : MonoBehaviour
 	Transform cursor;
 	int brushTile;
 	const int maxBrush = 4;
+	string[] tileNames = new string[]
+	{
+		"Eraser >:)",
+		"Spawn Tile :D",
+		"Basic Tile :P",
+		"Power-Up Tile :3",
+		"Spiky Tile :O"
+	};
 	Transform grid;
 	Transform cursorSelection;
     // Start is called before the first frame update
@@ -83,6 +92,7 @@ public class EditorGridManagerScript : MonoBehaviour
 	void UpdateCursorSelection()
 	{
 		cursor.GetComponent<SpriteRenderer>().sprite = GetTileSprite(brushTile == 0 ? -1 : brushTile);
-		for (int i = 0; i <= maxBrush; i++) { cursorSelection.GetChild(i).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, i == brushTile ? 1 : 0.25f); }
+		cursorSelection.GetChild(0).GetComponent<TextMeshPro>().text = tileNames[brushTile];
+		for (int i = 0; i <= maxBrush; i++) { cursorSelection.GetChild(i + 1).GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, i == brushTile ? 1 : 0.25f); }
 	}
 }
