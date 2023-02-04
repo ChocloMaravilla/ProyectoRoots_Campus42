@@ -4,29 +4,43 @@ using UnityEngine;
 
 public class Matrix : MonoBehaviour
 {
+    public GameObject cube;
     public int[,] matrix = new int[10, 10]
-    {{0,0,0,0,0,0,0,0,0,0},
-    {0,0,1,1,1,1,0,0,0,0},
-    {0,0,1,0,0,1,0,0,0,0},
-    {0,0,1,0,0,1,1,1,0,0},
-    {0,0,1,0,0,0,0,1,0,0},
-    {0,0,1,0,0,0,0,1,0,0},
-    {0,0,1,0,0,0,0,1,0,0},
-    {0,0,1,1,1,1,1,1,0,0},
-    {0,0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,0,0,0,0,0,0}};
+    {{0,0,0,0,0,0,0,0,1,0},
+    {1,1,1,1,1,1,1,1,1,0},
+    {0,1,1,1,1,1,1,1,1,0},
+    {0,1,1,1,1,1,1,1,1,0},
+    {0,1,1,1,1,1,1,1,1,0},
+    {0,1,1,1,1,1,1,1,1,0},
+    {0,1,1,1,1,1,1,1,1,0},
+    {0,1,1,1,1,1,1,1,1,0},
+    {0,1,1,1,1,1,1,1,1,1},
+    {0,1,0,0,0,0,0,0,0,0}};
     // Start is called before the first frame update
     void Start()
     {
-        PrintMap();
-        RellenarZona();
-        PrintMap();
+        InstantiateDebugMap();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+    public void InstantiateDebugMap()
+    {
+        float lastX = 0;
+        float lastY = 0;
+        for (int y = 0; y < 10; y++)
+        {
+            for (int x = 0; x < 10; x++)
+            {
+                if (matrix[x,y]==1)
+                {
+                    Instantiate(cube,new Vector3(x,0,y),Quaternion.identity);
+                }
+            }
+        }
     }
     public void PrintMap()
     {
