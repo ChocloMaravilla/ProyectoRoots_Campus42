@@ -44,7 +44,7 @@ Material:
     - _normHeight: 1
     - _normalStrength: 0.15
     - _rippleDissolve: 5
-    - _rippleScale: 5
+    - _rippleScale: 100
     - _rippleSpeed: 1
     - _smoothness: 1
     m_Colors:
