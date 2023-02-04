@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class CameraRotation : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera;
-
-    float smooth = 5.0f;
-    float tiltAngle = 60.0f;
+    [SerializeField] private float moveSpeed = 0.1f;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +15,6 @@ public class CameraRotation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Rotate(0,  moveSpeed , 0);
     }
 }
