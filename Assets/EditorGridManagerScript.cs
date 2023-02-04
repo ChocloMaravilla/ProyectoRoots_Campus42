@@ -138,8 +138,10 @@ public class EditorGridManagerScript : MonoBehaviour
     		int fileName = 0;
     		while (File.Exists(customBoardsPath + $"{fileName}.json")) { fileName++; }
     		using (StreamWriter sw = new StreamWriter(customBoardsPath + $"{fileName}.json")) { sw.Write(JsonUtility.ToJson(new BoardData(gridSize, rawGrid, rawValueGrid))); }
+    		Quit();
     	}
     }
+    void Quit() {}
     Sprite GetTileSprite(int _tileIndex) { return tileSprites[_tileIndex + 1]; }
     Sprite GetTileValueSprite(int _valueIndex) { return tileValueSprites[_valueIndex]; }
 	void UpdateCursorSelection()
