@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Matrix : MonoBehaviour
 {
     public GameObject cube;
+    public Player player;
     public int[,] matrix = new int[10, 10]
     {{0,0,0,0,0,0,0,0,1,0},
     {1,1,1,1,1,1,1,1,1,0},
@@ -25,7 +27,7 @@ public class Matrix : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public void InstantiateDebugMap()
     {
@@ -55,27 +57,56 @@ public class Matrix : MonoBehaviour
         }
         print(linea);
     }
-    public void RellenarZona()
+    public Transform[] RellenarZona(GameObject flor,int playerColor)
     {
-        int top=GetTop(1);
-        int bottom=GetBottom(1);
-       
+        int top=GetTop(playerColor);
+        int bottom=GetBottom(playerColor);
+        List<Transform> transforms = new List<Transform>();
         for (int y = 0; y < 10; y++)
         {
             bool startLine = false;
             for (int x= 0; x < 10; x++)
             {
-                if (y>=top && y <=bottom && !startLine && matrix[x,y]==1)
+                if (y>=top && y <=bottom && !startLine && matrix[x,y]== playerColor)
                 {
                     startLine = true;
-                }else if (startLine && x<GetMaxX(y,1))
+                }else if (startLine && x<GetMaxX(y, playerColor) && player.GetFlower(x, y) == null && (matrix[x + 1, y] != 0 && matrix[x - 1, y] != 0 && matrix[x, y + 1] != 0 && matrix[x, y - 1] != 0))
                 {
-                    matrix[x, y] = 1;
+                    matrix[x, y] = playerColor;
+                    transforms.Add(Instantiate(flor,new Vector3(y,0,x),Quaternion.identity).transform);
+                    transforms[transforms.Count - 1].GetComponent<Flower>().x = x;
+                    transforms[transforms.Count - 1].GetComponent<Flower>().y = y;
                 }
 
             }
         }
+        return transforms.ToArray();
+    }
+    public Transform[] RellenarZonaInverse(GameObject flor, int playerColor)
+    {
+        int top = GetTop(playerColor);
+        int bottom = GetBottom(playerColor);
+        List<Transform> transforms = new List<Transform>();
+        for (int x = 0; x < 10; x++)
+        {
+            bool startLine = false;
+            for (int y = 0; y < 10; y++)
+            {
+                if (y >= top && y <= bottom && !startLine && matrix[x, y] == playerColor)
+                {
+                    startLine = true;
+                }
+                else if (startLine && x < GetMaxX(y, playerColor) && player.GetFlower(x,y)==null && (matrix[x + 1, y] != 0 && matrix[x - 1, y] != 0 && matrix[x, y + 1] != 0 && matrix[x, y - 1] != 0))
+                {
+                    matrix[x, y] = playerColor;
+                    transforms.Add(Instantiate(flor, new Vector3(y, 0, x), Quaternion.identity).transform);
+                    transforms[transforms.Count - 1].GetComponent<Flower>().x = x;
+                    transforms[transforms.Count - 1].GetComponent<Flower>().y = y;
+                }
 
+            }
+        }
+        return transforms.ToArray();
     }
     public int GetMaxX(int yPos,int player)
     {
