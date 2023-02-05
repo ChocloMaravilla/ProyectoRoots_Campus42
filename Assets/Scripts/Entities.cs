@@ -25,8 +25,6 @@ public class Entities : MonoBehaviour
             CreateRaiz();
             Move();
             flower = false;
-
-
         }
         if (raices.Count != 0 && raices[raices.Count - 1].GetChild(0).GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 0.5f && !flower)
         {
@@ -53,7 +51,7 @@ public class Entities : MonoBehaviour
     {
         if (IsThereAFlower())
         {
-            Transform[] trans = CheckX()? matriz.RellenarZonaInverse(flor, 2): matriz.RellenarZona(flor, 2);
+            Transform[] trans = matriz.GetSequence(flor, 2);
             for (int i = 0; i < trans.Length; i++)
             {
                 floresHistory.Add(trans[i]);
@@ -68,9 +66,8 @@ public class Entities : MonoBehaviour
             flores[flores.Count - 1].GetComponent<Flower>().x = coordX;
             flores[flores.Count - 1].GetComponent<Flower>().y = coordY;
             floresHistory.Add(flores[flores.Count - 1]);
-            flower = true;
         }
-        
+        flower = true;
     }
     public bool CheckX()
     {
