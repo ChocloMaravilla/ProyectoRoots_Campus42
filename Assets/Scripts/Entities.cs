@@ -51,7 +51,6 @@ public class Entities : MonoBehaviour
     {
         if (IsThereAFlower())
         {
-            print("hola");
             Transform[] trans = matriz.GetSequence(flor, 1);
             for (int i = 0; i < trans.Length; i++)
             {
