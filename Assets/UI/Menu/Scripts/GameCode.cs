@@ -37,9 +37,9 @@ public class GameCode : MonoBehaviour
     }
     public void Menu()
     {
-        options.SetActive(true);
+        options.SetActive(false);
         nivel.SetActive(false);
-        menu.SetActive(false);
+        menu.SetActive(true);
     }
     
     public void Exit()
@@ -48,8 +48,25 @@ public class GameCode : MonoBehaviour
     }
 
 
-    public void ChangeScene()
+    public void ChangeScene(string path)
     {
-        SceneManager.LoadScene(1);
+        BoardData board= new BoardData();
+        board.LoadFromFile("StreamingAssets/" + path);
+        try
+        {
+            int[,] hola = board.GetRawTileMatrix();
+            print(hola[0,0]);
+            Menu();
+        }
+        catch
+        {
+
+        }
+        //SceneManager.LoadScene(1);
     }
+}
+
+public static class Path
+{
+    public static TextAsset json;
 }
