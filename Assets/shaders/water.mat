@@ -41,16 +41,16 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _metallic: 0
-    - _normHeight: 1
-    - _normalStrength: 0.15
-    - _rippleDissolve: 5
+    - _normHeight: 0.76
+    - _normalStrength: 0.27
+    - _rippleDissolve: 5.02
     - _rippleScale: 100
-    - _rippleSpeed: 1
-    - _smoothness: 1
+    - _rippleSpeed: 2
+    - _smoothness: 6.55
     m_Colors:
-    - _baseColor: {r: 0, g: 0.062227886, b: 0.23113209, a: 0}
-    - _normalSpeed: {r: 0.02, g: 0.08, b: 0, a: 0}
-    - _rippleColor: {r: 0, g: 0.42486572, b: 2.8481724, a: 0}
+    - _baseColor: {r: 0, g: 0.1850183, b: 0.6886792, a: 0}
+    - _normalSpeed: {r: 0.05, g: 0.05, b: 0, a: 0}
+    - _rippleColor: {r: 0.19294712, g: 0.24032637, b: 0.50499743, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &8822347561681673742
 MonoBehaviour:
