@@ -10,7 +10,7 @@ public class Countdown : MonoBehaviour
     public float timeRemaining = 10;
     public bool timerIsRunning = false;
     public TextMeshProUGUI timeText;
-    public GameObject options;
+    public GameObject options, final;
 
     private void Start()
     {
@@ -37,7 +37,7 @@ public class Countdown : MonoBehaviour
         }
         if (timerIsRunning)
         {
-            if (timeRemaining > 0)
+            if (timeRemaining >= 0)
             {
                 timeRemaining -= Time.deltaTime;
                 DisplayTime(timeRemaining);
@@ -46,6 +46,8 @@ public class Countdown : MonoBehaviour
             {
                 timeRemaining = 0;
                 timerIsRunning = false;
+                final.SetActive(true);
+                timeText.enabled = false;
             }
         }
 
