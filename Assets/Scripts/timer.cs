@@ -1,40 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using TMPro;
 
-public class Countdown : MonoBehaviour
+public class timer : MonoBehaviour
 {
-    public TextMeshProUGUI text;
-    float n = 4f;
     public float timeRemaining = 10;
     public bool timerIsRunning = false;
     public TextMeshProUGUI timeText;
-    public GameObject options;
-
     private void Start()
     {
-        options.SetActive(false);
         // Starts the timer automatically
+        timerIsRunning = true;
     }
     void Update()
     {
-        n -= Time.deltaTime;
-
-        int num = (int)n;
-        text.text = num.ToString();
-
-        if (n <= 0)
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                if (Time.timeScale == 1) { Time.timeScale = 0; options.SetActive(true); timeText.enabled = false; }
-                else { Time.timeScale = 1; options.SetActive(false); timeText.enabled = true; }
-            }
-
-            timerIsRunning = true;
-            gameObject.GetComponent<TextMeshProUGUI>().enabled = false;
-        }
         if (timerIsRunning)
         {
             if (timeRemaining > 0)
@@ -44,18 +24,12 @@ public class Countdown : MonoBehaviour
             }
             else
             {
+                Debug.Log("Time has run out!");
                 timeRemaining = 0;
                 timerIsRunning = false;
             }
         }
-
-
-
-
-
-
     }
-
     void DisplayTime(float timeToDisplay)
     {
         timeToDisplay += 1;
@@ -63,23 +37,5 @@ public class Countdown : MonoBehaviour
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
         timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
-
-    public void Options()
-    {
-        options.SetActive(false);
-        timeText.enabled=true;
-        Time.timeScale= 1;
-    }
-
-
-
-
-
-
-
-
-
-
-
 
 }
