@@ -17,8 +17,8 @@ public class PlayerStadistics : MonoBehaviour
         jugadors = new List<Porcentajes>();
         for (int i = 0; i < textMeshProUGUIs.Count; i++)
         {
-
-            Porcentajes tmpPorcen = new Porcentajes((i + 1), int.Parse(textMeshProUGUIs[i].text));
+            int value = int.Parse(textMeshProUGUIs[i].text);
+            Porcentajes tmpPorcen = new Porcentajes((i + 1), value);
             jugadors.Add(tmpPorcen);
         }
 
