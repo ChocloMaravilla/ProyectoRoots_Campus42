@@ -22,7 +22,6 @@ public class GameCode : MonoBehaviour
 
     public void Levels()
     {
-        print("a");
         menu.SetActive(false);
         options.SetActive(false);
         nivel.SetActive(true);
