@@ -18,6 +18,25 @@ public class Player : Entities
     {
         UpdatePadre();
     }
+    public override void UpdatePadre()
+    {
+        base.UpdatePadre();
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            direction = Direction.down;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            direction = Direction.up;
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            direction = Direction.right;
+        }
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            direction = Direction.left;
+        }
+    }
 
-    
 }

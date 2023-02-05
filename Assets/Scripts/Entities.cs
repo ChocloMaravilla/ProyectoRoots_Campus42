@@ -13,7 +13,7 @@ public class Entities : MonoBehaviour
     public List<Transform> floresHistory;
     public bool flower;
     public Matrix matriz;
-    public void UpdatePadre()
+    public virtual void UpdatePadre()
     {
         if (raices.Count == 0)
         {
@@ -29,22 +29,6 @@ public class Entities : MonoBehaviour
         if (raices.Count != 0 && raices[raices.Count - 1].GetChild(0).GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 0.5f && !flower)
         {
             CreateFlower();
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            direction = Direction.down;
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            direction = Direction.up;
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            direction = Direction.right;
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            direction = Direction.left;
         }
     }
     public void CreateFlower()
