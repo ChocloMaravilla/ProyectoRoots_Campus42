@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GameCode : MonoBehaviour
 {
+
+    public GameObject nivel, options, menu;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +19,34 @@ public class GameCode : MonoBehaviour
     {
         
     }
+
+    public void Levels()
+    {
+        print("a");
+        menu.SetActive(false);
+        options.SetActive(false);
+        nivel.SetActive(true);
+
+    }
+
+    public void Options()
+    {
+        options.SetActive(true);
+        nivel.SetActive(false);
+        menu.SetActive(false);
+    }
+    public void Menu()
+    {
+        options.SetActive(true);
+        nivel.SetActive(false);
+        menu.SetActive(false);
+    }
+    
+    public void Exit()
+    {
+        Application.Quit();
+    }
+
 
     public void ChangeScene()
     {
