@@ -6,7 +6,7 @@ using UnityEngine;
 public class Countdown : MonoBehaviour
 {
     public TextMeshProUGUI text;
-    float n = 3f;
+    float n = 4f;
 
     void Update()
     {
