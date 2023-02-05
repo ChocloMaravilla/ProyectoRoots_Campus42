@@ -22,7 +22,6 @@ public class GameCode : MonoBehaviour
 
     public void Levels()
     {
-        print("a");
         menu.SetActive(false);
         options.SetActive(false);
         nivel.SetActive(true);
@@ -37,9 +36,9 @@ public class GameCode : MonoBehaviour
     }
     public void Menu()
     {
-        options.SetActive(true);
+        options.SetActive(false);
         nivel.SetActive(false);
-        menu.SetActive(false);
+        menu.SetActive(true);
     }
     
     public void Exit()
@@ -48,8 +47,14 @@ public class GameCode : MonoBehaviour
     }
 
 
-    public void ChangeScene()
+    public void ChangeScene(string path)
     {
+        Path.json = Application.streamingAssetsPath + "/" + path;
         SceneManager.LoadScene(1);
     }
+}
+
+public static class Path
+{
+    public static string json;
 }
