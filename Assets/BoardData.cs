@@ -92,15 +92,15 @@ public class BoardData
 		using (StreamReader sr = new StreamReader(_jsonPath)) { jsonData = sr.ReadToEnd(); }
 		JsonUtility.FromJsonOverwrite(jsonData, this);
 	}
-	public int[][] GetRawTileMatrix()
+	public int[,] GetRawTileMatrix()
 	{
-		int[][] returnMatrix = new int[size.y][];
+		int[,] returnMatrix = new int[size.y, size.x];
 		for (int y = 0; y < size.y; y++)
 		{
-			returnMatrix[y] = new int[size.x];
+			//returnMatrix[y] = new int[size.x];
 			for (int x = 0; x < size.x; x++)
 			{
-				returnMatrix[y][x] = rawTiles[y * size.x + x];
+				returnMatrix[y,x] = rawTiles[y * size.x + x];
 			}
 		}
 		return returnMatrix;
