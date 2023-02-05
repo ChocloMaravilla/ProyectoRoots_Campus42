@@ -65,26 +65,12 @@ public class Entities : MonoBehaviour
     }
     public void CreateFlower()
     {
-        if (IsThereAFlower())
-        {
-            return;
-            Transform[] trans = matriz.GetSequence(flor, 1);
-            for (int i = 0; i < trans.Length; i++)
-            {
-                floresHistory.Add(trans[i]);
-            }
-            flores.Clear();
-            flores = new List<Transform>();
-        }
-        else
-        {
-            GameObject newFlor = Instantiate(flor, new Vector3(coordY, 0, coordX), Quaternion.identity);
-            flores.Add(newFlor.transform);
-            flores[flores.Count - 1].GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetColor("_BaseColor", PlayerColors.GetColor(ownershipType));
-            flores[flores.Count - 1].GetComponent<Flower>().x = coordX;
-            flores[flores.Count - 1].GetComponent<Flower>().y = coordY;
-            floresHistory.Add(flores[flores.Count - 1]);
-        }
+        GameObject newFlor = Instantiate(flor, new Vector3(coordY, 0, coordX), Quaternion.identity);
+        flores.Add(newFlor.transform);
+        flores[flores.Count - 1].GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetColor("_BaseColor", PlayerColors.GetColor(ownershipType));
+        flores[flores.Count - 1].GetComponent<Flower>().x = coordX;
+        flores[flores.Count - 1].GetComponent<Flower>().y = coordY;
+        floresHistory.Add(flores[flores.Count - 1]);
         flower = true;
     }
     // Unused
@@ -181,25 +167,21 @@ public class Entities : MonoBehaviour
                     coordY++;
                     break;
             }
-            matriz.SetTileOwner(new Vector2Int(coordX, coordY), ownershipType);
-            Test();
+            if (matriz.matriz[coordX, coordY].owner != Owner.None || matriz.matriz[coordX, coordY].type == Types.Spike)
+            {
+                OnDefeat();
+                matriz.OnEntityDefeated();
+            }
+            else
+            {
+                matriz.SetTileOwner(new Vector2Int(coordX, coordY), ownershipType);
+
+            }
             if (!IsValidDir(direction)) { direction = Direction.none; }
         }
     }
     public bool IsOnTile(Vector2Int coords) { return coordX == coords.x && coordY == coords.y; }
-    void Test()
-    {
-        Vector2Int nextPos = new Vector2Int(coordX, coordY);
-        if (posQueue.Contains(nextPos))
-        {
-            // Get Intersection Queue
-            int startIndex = posQueue.LastIndexOf(nextPos);
-            List<Vector2Int> newQueue = new List<Vector2Int>();
-            for (int i = startIndex; i < posQueue.Count; i++) { newQueue.Add(posQueue[i]); }
-            posQueue.Clear();
-        }
-        else { posQueue.Add(nextPos); }
-    }
+    protected virtual void OnDefeat() { }
 }
 public enum Direction
 {

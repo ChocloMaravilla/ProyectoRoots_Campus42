@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : Entities
 {
+    bool playerStarted;
     int turnCountdown;
     Direction lastValidDir = Direction.none;
     // Start is called before the first frame update
@@ -16,6 +17,22 @@ public class Enemy : Entities
     void Update()
     {
         UpdatePadre();
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            playerStarted = true;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            playerStarted = true;
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            playerStarted = true;
+        }
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            playerStarted = true;
+        }
         if (direction == Direction.none) { Move(); }
     }
     public override void UpdatePadre()
@@ -25,6 +42,7 @@ public class Enemy : Entities
     public override void Move()
     {
         base.Move();
+        if (!playerStarted) { return; }
         if (turnCountdown == 0 || direction == Direction.none)
         {
             turnCountdown = Random.Range(2, 5);
@@ -56,5 +74,9 @@ public class Enemy : Entities
             lastValidDir = direction;
         }
         else { turnCountdown--; }
+    }
+    protected override void OnDefeat()
+    {
+        gameObject.SetActive(false);
     }
 }

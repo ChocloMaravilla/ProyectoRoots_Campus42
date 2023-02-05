@@ -37,4 +37,9 @@ public class Player : Entities
         }
         if (!IsValidDir(direction)) { direction = Direction.none; }
     }
+    protected override void OnDefeat()
+    {
+        print("bruh");
+        gameObject.SetActive(false);
+    }
 }

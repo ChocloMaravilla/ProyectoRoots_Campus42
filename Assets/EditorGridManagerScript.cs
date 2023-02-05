@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class EditorGridManagerScript : MonoBehaviour
 {
@@ -133,15 +134,12 @@ public class EditorGridManagerScript : MonoBehaviour
     	// JSON
     	if (Input.GetKeyDown(KeyCode.Space))
     	{
-    		string customBoardsPath = Application.streamingAssetsPath + "/CustomBoards/";
-    		if (!Directory.Exists(customBoardsPath)) { Directory.CreateDirectory(customBoardsPath); }
-    		int fileName = 0;
-    		while (File.Exists(customBoardsPath + $"{fileName}.json")) { fileName++; }
-    		using (StreamWriter sw = new StreamWriter(customBoardsPath + $"{fileName}.json")) { sw.Write(JsonUtility.ToJson(new BoardData(gridSize, rawGrid, rawValueGrid))); }
+    		using (StreamWriter sw = new StreamWriter(Application.streamingAssetsPath + $"/a.json")) { sw.Write(JsonUtility.ToJson(new BoardData(gridSize, rawGrid, rawValueGrid))); }
     		Quit();
     	}
+        if (Input.GetKeyDown(KeyCode.Escape)) { Quit(); }
     }
-    void Quit() {}
+    void Quit() { SceneManager.LoadScene("Option Scene"); }
     Sprite GetTileSprite(int _tileIndex) { return tileSprites[_tileIndex + 1]; }
     Sprite GetTileValueSprite(int _valueIndex) { return tileValueSprites[_valueIndex]; }
 	void UpdateCursorSelection()

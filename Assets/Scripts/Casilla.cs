@@ -13,6 +13,7 @@ public class Casilla
         {
             case Types.Basics: return true;
             case Types.PowerUp: return true;
+            case Types.Spike: return true;
             default: return false;
         }
     }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Countdown : MonoBehaviour
 {
@@ -11,10 +12,12 @@ public class Countdown : MonoBehaviour
     public bool timerIsRunning = false;
     public TextMeshProUGUI timeText;
     public GameObject options, final;
+    bool a;
+    float v;
 
     private void Start()
     {
-        options.SetActive(false);
+        //options.SetActive(false);
         // Starts the timer automatically
     }
     void Update()
@@ -41,19 +44,36 @@ public class Countdown : MonoBehaviour
             {
                 timeRemaining -= Time.deltaTime;
                 DisplayTime(timeRemaining);
+                a = true;
+
             }
             else
             {
                 timeRemaining = 0;
                 timerIsRunning = false;
                 final.SetActive(true);
-                timeText.enabled = false;
+                //timeText.enabled = false;
             }
         }
 
 
 
-
+        if (a)
+        {
+            v += Time.deltaTime;
+            if (v >= 3)
+            {
+                bool anyVictory = VirtualRAM.playerVictories == 3 || VirtualRAM.bot1Victories == 3 || VirtualRAM.bot2Victories == 3 || VirtualRAM.bot3Victories == 3;
+                if (anyVictory)
+                {
+                    VirtualRAM.playerVictories = 0;
+                    VirtualRAM.bot1Victories = 0;
+                    VirtualRAM.bot2Victories = 0;
+                    VirtualRAM.bot3Victories = 0;
+                }
+                SceneManager.LoadScene(anyVictory ? "Option Scene" : "PruebaMovimiento");
+            }
+        }
 
 
     }
@@ -63,7 +83,7 @@ public class Countdown : MonoBehaviour
         timeToDisplay += 1;
         float minutes = Mathf.FloorToInt(timeToDisplay / 60);
         float seconds = Mathf.FloorToInt(timeToDisplay % 60);
-        timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        //timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public void Options()
