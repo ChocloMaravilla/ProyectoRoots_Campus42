@@ -22,7 +22,7 @@ public class Matrix1 : MonoBehaviour
             for (int y = 0; y < 20; y++)
             {
                 matriz[x, y] = new Casilla();
-                matriz[x, y].types = (Types)matrix[x, y];
+                matriz[x, y].type = (Types)matrix[x, y];
             }
         }
         InstantiateDebugMap();
@@ -39,7 +39,7 @@ public class Matrix1 : MonoBehaviour
         {
             for (int x = 0; x < 20; x++)
             {
-                switch (matriz[x,y].types)
+                switch (matriz[x,y].type)
                 {
                     case Types.None:
                         break;

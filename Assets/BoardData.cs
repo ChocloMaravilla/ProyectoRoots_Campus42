@@ -105,15 +105,15 @@ public class BoardData
 		}
 		return returnMatrix;
 	}
-	public int[][] GetRawTileValueMatrix()
+	public int[,] GetRawTileValueMatrix()
 	{
-		int[][] returnMatrix = new int[size.y][];
+		int[,] returnMatrix = new int[size.y, size.x];
 		for (int y = 0; y < size.y; y++)
 		{
-			returnMatrix[y] = new int[size.x];
+			//returnMatrix[y] = new int[size.x];
 			for (int x = 0; x < size.x; x++)
 			{
-				returnMatrix[y][x] = rawValueTiles[y * size.x + x];
+				returnMatrix[y,x] = rawValueTiles[y * size.x + x];
 			}
 		}
 		return returnMatrix;

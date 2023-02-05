@@ -8,9 +8,7 @@ public class Player : Entities
     // Start is called before the first frame update
     void Start()
     {
-        coordX = 1;
-        coordY = 9;
-        direction = Direction.left;
+        Spawn();
     }
 
     // Update is called once per frame
@@ -37,6 +35,6 @@ public class Player : Entities
         {
             direction = Direction.left;
         }
+        if (!IsValidDir(direction)) { direction = Direction.none; }
     }
-
 }

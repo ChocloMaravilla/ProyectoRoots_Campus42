@@ -4,32 +4,64 @@ using UnityEngine;
 
 public class Entities : MonoBehaviour
 {
-    public int coordX,coordY;
+    public Vector2Int spawnPos;
+    public int coordX, coordY;
     public Direction direction;
     public GameObject raiz;
     public GameObject flor;
     public List<Transform> raices;
     public List<Transform> flores;
     public List<Transform> floresHistory;
+    public List<Vector2Int> posQueue;
     public bool flower;
     public Matrix matriz;
+    public Owner ownershipType;
+    protected void Spawn()
+    {
+        coordX = spawnPos.x;
+        coordY = spawnPos.y;
+        direction = Direction.none;
+    }
     public virtual void UpdatePadre()
     {
-        if (raices.Count == 0)
+        if (direction != Direction.none)
         {
-            CreateRaiz();
+            if (raices.Count == 0)
+            {
+                CreateRaiz();
+            }
+            else if (raices[raices.Count - 1].GetChild(0).GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+            {
+                CreateRaiz();
+                Move();
+                flower = false;
+            }
+            if (raices.Count > 0 && raices[raices.Count - 1].GetChild(0).GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 0.5f && !flower)
+            {
+                CreateFlower();
+            }
         }
-        else if (raices[raices.Count - 1].GetChild(0).GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 1)
+    }
+    protected bool IsValidDir(Direction dir)
+    {
+        if (dir == Direction.none) { return false; }
+        Vector2Int targetCoords = new Vector2Int(coordX, coordY);
+        switch (dir)
         {
-
-            CreateRaiz();
-            Move();
-            flower = false;
+            case Direction.up:
+                targetCoords.x--;
+                break;
+            case Direction.down:
+                targetCoords.x++;
+                break;
+            case Direction.left:
+                targetCoords.y--;
+                break;
+            case Direction.right:
+                targetCoords.y++;
+                break;
         }
-        if (raices.Count != 0 && raices[raices.Count - 1].GetChild(0).GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime > 0.5f && !flower)
-        {
-            CreateFlower();
-        }
+        return matriz.CanStepOnTile(targetCoords);
     }
     public void CreateFlower()
     {
@@ -47,44 +79,46 @@ public class Entities : MonoBehaviour
         {
             GameObject newFlor = Instantiate(flor, new Vector3(coordY, 0, coordX), Quaternion.identity);
             flores.Add(newFlor.transform);
+            flores[flores.Count - 1].GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetColor("_BaseColor", PlayerColors.GetColor(ownershipType));
             flores[flores.Count - 1].GetComponent<Flower>().x = coordX;
             flores[flores.Count - 1].GetComponent<Flower>().y = coordY;
             floresHistory.Add(flores[flores.Count - 1]);
         }
         flower = true;
     }
+    // Unused
     public bool CheckX()
     {
         for (int i = 0; i < flores.Count; i++)
         {
             int cuantity = 0;
-            if (GetFlower(flores[i].GetComponent<Flower>().x, flores[i].GetComponent<Flower>().y)!=null
-                && GetFlower(flores[i].GetComponent<Flower>().x, flores[i].GetComponent<Flower>().y+1) != null)
+            if (GetFlower(flores[i].GetComponent<Flower>().x, flores[i].GetComponent<Flower>().y) != null
+                && GetFlower(flores[i].GetComponent<Flower>().x, flores[i].GetComponent<Flower>().y + 1) != null)
             {
                 cuantity++;
             }
             if (GetFlower(flores[i].GetComponent<Flower>().x, flores[i].GetComponent<Flower>().y) != null
-                && GetFlower(flores[i].GetComponent<Flower>().x, flores[i].GetComponent<Flower>().y-1) != null)
+                && GetFlower(flores[i].GetComponent<Flower>().x, flores[i].GetComponent<Flower>().y - 1) != null)
             {
                 cuantity++;
             }
-            if ((GetFlower(flores[i].GetComponent<Flower>().x-1, flores[i].GetComponent<Flower>().y) != null || GetFlower(flores[i].GetComponent<Flower>().x+1, flores[i].GetComponent<Flower>().y))
+            if ((GetFlower(flores[i].GetComponent<Flower>().x - 1, flores[i].GetComponent<Flower>().y) != null || GetFlower(flores[i].GetComponent<Flower>().x + 1, flores[i].GetComponent<Flower>().y))
                 && GetFlower(flores[i].GetComponent<Flower>().x, flores[i].GetComponent<Flower>().y) != null)
             {
                 cuantity++;
             }
-            if (cuantity==3)
+            if (cuantity == 3)
             {
                 return false;
             }
         }
         return true;
     }
-    public Transform GetFlower(int x,int y)
+    public Transform GetFlower(int x, int y)
     {
         for (int i = 0; i < floresHistory.Count; i++)
         {
-            if (floresHistory[i].GetComponent<Flower>().x==x && floresHistory[i].GetComponent<Flower>().y == y)
+            if (floresHistory[i].GetComponent<Flower>().x == x && floresHistory[i].GetComponent<Flower>().y == y)
             {
                 return floresHistory[i];
             }
@@ -127,30 +161,46 @@ public class Entities : MonoBehaviour
                 break;
         }
     }
-    public void Move()
+    public virtual void Move()
     {
-        switch (direction)
+        if (direction != Direction.none)
         {
-            case Direction.up:
-                coordX--;
-
-                break;
-            case Direction.down:
-                coordX++;
-                break;
-            case Direction.left:
-                coordY--;
-                break;
-            case Direction.right:
-                coordY++;
-                break;
-            default:
-                break;
+            switch (direction)
+            {
+                case Direction.up:
+                    coordX--;
+                    break;
+                case Direction.down:
+                    coordX++;
+                    break;
+                case Direction.left:
+                    coordY--;
+                    break;
+                case Direction.right:
+                    coordY++;
+                    break;
+            }
+            matriz.SetTileOwner(new Vector2Int(coordX, coordY), ownershipType);
+            Test();
+            if (!IsValidDir(direction)) { direction = Direction.none; }
         }
-        matriz.matriz[coordX, coordY].owner=Owner.Blue;
+    }
+    public bool IsOnTile(Vector2Int coords) { return coordX == coords.x && coordY == coords.y; }
+    void Test()
+    {
+        Vector2Int nextPos = new Vector2Int(coordX, coordY);
+        if (posQueue.Contains(nextPos))
+        {
+            // Get Intersection Queue
+            int startIndex = posQueue.LastIndexOf(nextPos);
+            List<Vector2Int> newQueue = new List<Vector2Int>();
+            for (int i = startIndex; i < posQueue.Count; i++) { newQueue.Add(posQueue[i]); }
+            posQueue.Clear();
+        }
+        else { posQueue.Add(nextPos); }
     }
 }
 public enum Direction
 {
-    up,down,left,right
+    none, up, down, left, right
 }
