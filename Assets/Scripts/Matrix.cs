@@ -11,7 +11,9 @@ public class Matrix : MonoBehaviour
 
     public GameObject cube;
     public GameObject playerObj;
+    public GameObject enemyObj;
     Player player;
+    Enemy[] enemies;
     public int[,] matrix;
     public Casilla[,] matriz = new Casilla[20, 20];
     public BoardData data = new BoardData();
@@ -312,16 +314,21 @@ public class Matrix : MonoBehaviour
         player.matriz = this;
         player.spawnPos = usedSpawns[0];
         Instantiate(spawnCasilla, new Vector3(player.spawnPos.y, 0, player.spawnPos.x), Quaternion.identity).transform.GetChild(0).GetComponent<MeshRenderer>().materials[1].color = PlayerColors.GetColor(Owner.Blue);
+        enemies = new Enemy[3];
         for (int y = 1; y < 4; y++)
         {
-            Color[] colors = new Color[4]
+            enemies[y - 1] = Instantiate(enemyObj).GetComponent<Enemy>();
+            enemies[y - 1].matriz = this;
+            enemies[y - 1].spawnPos = usedSpawns[y];
+            Owner[] ownerships = new Owner[4]
             {
-                PlayerColors.GetColor(Owner.Blue),
-                PlayerColors.GetColor(Owner.Red),
-                PlayerColors.GetColor(Owner.Grean),
-                PlayerColors.GetColor(Owner.Yellow)
+                Owner.Blue,
+                Owner.Red,
+                Owner.Grean,
+                Owner.Yellow
             };
-            Instantiate(spawnCasilla, new Vector3(usedSpawns[y].y, 0, usedSpawns[y].x), Quaternion.identity).transform.GetChild(0).GetComponent<MeshRenderer>().materials[1].color = colors[y];
+            enemies[y - 1].ownershipType = ownerships[y];
+        Instantiate(spawnCasilla, new Vector3(usedSpawns[y].y, 0, usedSpawns[y].x), Quaternion.identity).transform.GetChild(0).GetComponent<MeshRenderer>().materials[1].color = PlayerColors.GetColor(ownerships[y]);
         }
     }
 }
