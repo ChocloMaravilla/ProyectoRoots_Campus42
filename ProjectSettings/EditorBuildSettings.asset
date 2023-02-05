@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Option Scene.unity
     guid: 60f8f904db46247499b8e2260b0451b4
+  - enabled: 1
+    path: Assets/Scenes/UIScene.unity
+    guid: 602ffc7dc435bb3499eb52085b6a176b
   m_configObjects: {}

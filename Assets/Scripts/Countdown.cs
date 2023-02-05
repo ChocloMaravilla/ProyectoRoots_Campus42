@@ -12,14 +12,14 @@ public class Countdown : MonoBehaviour
     {
         n -= Time.deltaTime;
 
-        int num = (int) n;
-
+        int num = (int)n;
         text.text = num.ToString();
 
-        if(n < 0)
+        if (n < 0)
         {
             //Iniciar Partida
             Destroy(gameObject);
         }
+        
     }
 }
