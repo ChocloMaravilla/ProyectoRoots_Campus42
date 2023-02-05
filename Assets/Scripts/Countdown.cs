@@ -6,7 +6,7 @@ using UnityEngine;
 public class Countdown : MonoBehaviour
 {
     public TextMeshProUGUI text;
-    float n = 4f;
+    public float n = 4f;
     public float timeRemaining = 10;
     public bool timerIsRunning = false;
     public TextMeshProUGUI timeText;

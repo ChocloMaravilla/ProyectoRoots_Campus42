@@ -4,29 +4,39 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStadistics : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI text1, text2, text3, text4;
+
+    [SerializeField] private GameObject playerScore;
+    [SerializeField] private Transform grid;
     private List<Porcentajes> jugadors;
     public List<TextMeshProUGUI> textMeshProUGUIs;
-    private List<Porcentajes> porcentajesOrdes;
+    public List<Image> Imges;
 
-    void Update()
+    private void Start()
+    {
+        ScorePrint();
+    }
+
+    public void ScorePrint()
     {
         jugadors = new List<Porcentajes>();
         for (int i = 0; i < textMeshProUGUIs.Count; i++)
         {
             int value = int.Parse(textMeshProUGUIs[i].text);
-            Porcentajes tmpPorcen = new Porcentajes((i + 1), value);
+            Porcentajes tmpPorcen = new Porcentajes((i + 1), value, Imges[i]);
             jugadors.Add(tmpPorcen);
         }
+        jugadors = jugadors.OrderByDescending(Porcentajes => Porcentajes.percentage).ToList();
 
-        porcentajesOrdes = jugadors.OrderByDescending(Porcentajes => Porcentajes.percentage).ToList();
-        text1.SetText(porcentajesOrdes[0].percentage.ToString());
-        text2.SetText(porcentajesOrdes[1].percentage.ToString());
-        text3.SetText(porcentajesOrdes[2].percentage.ToString());
-        text4.SetText(porcentajesOrdes[3].percentage.ToString());
+        for (int i = 0; i < textMeshProUGUIs.Count; i++)
+        {
+            GameObject tmpObject = Instantiate(playerScore, grid.transform);
+            tmpObject.GetComponentInChildren<TextMeshProUGUI>().text = jugadors[i].percentage.ToString();
+            tmpObject.GetComponentInChildren<Image>().sprite = jugadors[i].sprite.sprite;
+        }
 
     }
 
@@ -36,10 +46,12 @@ public class PlayerStadistics : MonoBehaviour
 public class Porcentajes{
     public int id;
     public int percentage;
+    public Image sprite;
 
-    public Porcentajes(int id, int percentage)
+    public Porcentajes(int id, int percentage, Image sprite)
     {
         this.id = id;
         this.percentage = percentage;
+        this.sprite = sprite;
     }
 }
