@@ -105,7 +105,7 @@ public class Matrix : MonoBehaviour
     public Transform[] GetSequence(GameObject flor, int playerColor)
     {
         List<Transform> transforms = new List<Transform>();
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 20; i++)
         {
             List<int[]> listaInts = GetXSequenceAtY(i, playerColor);
 
@@ -150,24 +150,24 @@ public class Matrix : MonoBehaviour
                 switch (type)
                 {
                     case 0:
-                        for (int i = ar[1] + 1; i < 10; i++)
+                        for (int i = ar[1] + 1; i < 20; i++)
                         {
-                            if (matriz[i, y].owner != (Owner)playerColor || i >= 9)
+                            if (matriz[i, y].owner != (Owner)playerColor || i >= 19)
                             {
-                                temp = i - 1;
+                                temp = i ;
                                 break;
                             }
                         }
                         break;
                     case 2:
-                        for (int i = ar[1] + 1; i < 10; i++)
+                        for (int i = ar[1] + 1; i < 20; i++)
                         {
                             if (matriz[i, y].owner == (Owner)playerColor)
                             {
                                 temp = i;
                                 break;
                             }
-                            else if (i >= 9)
+                            else if (i >= 19)
                             {
                                 temp = -1;
                             }
@@ -192,7 +192,7 @@ public class Matrix : MonoBehaviour
         bool init = false;
         if (startX != -1)
         {
-            for (int i = startX; i < 10; i++)
+            for (int i = startX; i < 20; i++)
             {
                 if (!init && matriz[i, y].owner == (Owner)player)
                 {
@@ -224,22 +224,22 @@ public class Matrix : MonoBehaviour
         switch (type)
         {
             case 0:
-                for (int i = start + 1; i < 10; i++)
+                for (int i = start + 1; i < 20; i++)
                 {
-                    if (matriz[i, y].owner != (Owner)player || i >= 9)
+                    if (matriz[i, y].owner != (Owner)player || i >= 19)
                     {
-                        return i - 1;
+                        return i;
                     }
                 }
                 break;
             case 2:
-                for (int i = start + 1; i < 10; i++)
+                for (int i = start + 1; i < 20; i++)
                 {
                     if (matriz[i, y].owner == (Owner)player)
                     {
                         return i;
                     }
-                    else if (i >= 9)
+                    else if (i >= 19)
                     {
                         return -1;
                     }
@@ -267,7 +267,7 @@ public class Matrix : MonoBehaviour
                 salir = true;
             }
         }
-        if (i != -1 && ammount % 2 == 0)
+        if (i != -1 && (ammount-1 % 2 == 0 ) && ammount>2)
         {
             return i;
         }
