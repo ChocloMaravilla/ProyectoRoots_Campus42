@@ -20,6 +20,8 @@ public class Matrix : MonoBehaviour
     {0,1,1,1,1,1,1,1,1,0},
     {0,1,1,1,1,1,1,1,1,1},
     {0,1,0,0,0,0,0,0,0,0}};
+    public Casilla[,] matriz;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -151,7 +153,7 @@ public class Matrix : MonoBehaviour
             {
                 if (!init && matrix[i, y] == player)
                 {
-                    ints[0] = i;
+                    ints[0] = Initial(i,y,player);
                     init = true;
                 }
             }
@@ -202,104 +204,31 @@ public class Matrix : MonoBehaviour
         }
         return -1;
     }
-    public Transform[] RellenarZona(GameObject flor,int playerColor)
+    public int Initial(int supposedStart,int y,int player)
     {
-        int top=GetTop(playerColor);
-        int bottom=GetBottom(playerColor);
-        List<Transform> transforms = new List<Transform>();
-        for (int y = 0; y < 10; y++)
+        bool salir = false;
+        int ammount = 0;
+        int valor = NextX(supposedStart, y, player);
+        int i = NextX(supposedStart, y, player);
+        while (!salir)
         {
-            int par = 0;
-            for (int x= 0; x < 10; x++)
+            
+            if (valor != -1)
             {
-                if (y>=top && y <=bottom && matrix[x + 1, y] != playerColor && matrix[x,y]== playerColor)
-                {
-                    par++;
-                }
-                else if (par%2!=0 && x<GetMaxX(y, playerColor) && player.GetFlower(x, y) == null && (matrix[x + 1, y] != 0 && matrix[x - 1, y] != 0 && matrix[x, y + 1] != 0 && matrix[x, y - 1] != 0))
-                {
-                    matrix[x, y] = playerColor;
-                    transforms.Add(Instantiate(flor, new Vector3(y, 0, x), Quaternion.identity).transform);
-                    transforms[transforms.Count - 1].GetComponent<Flower>().x = x;
-                    transforms[transforms.Count - 1].GetComponent<Flower>().y = y;
-                }
+                valor = NextX(valor, y, player);
+                ammount++;
+            }
+            else
+            {
+                salir = true;
             }
         }
-        return transforms.ToArray();
-    }
-    public Transform[] RellenarZonaInverse(GameObject flor, int playerColor)
-    {
-        int top = GetTop(playerColor);
-        int bottom = GetBottom(playerColor);
-        List<Transform> transforms = new List<Transform>();
-        for (int x = 0; x < 10; x++)
+        if (i!=-1 && ammount%2==0)
         {
-            bool startLine = false;
-            for (int y = 0; y < 10; y++)
-            {
-                if (y >= top && y <= bottom && !startLine && matrix[x, y] == playerColor)
-                {
-                    startLine = true;
-                }
-                else if (startLine && x < GetMaxX(y, playerColor) && player.GetFlower(x,y)==null && (matrix[x + 1, y] != 0 && matrix[x - 1, y] != 0 && matrix[x, y + 1] != 0 && matrix[x, y - 1] != 0))
-                {
-                    matrix[x, y] = playerColor;
-                    transforms.Add(Instantiate(flor, new Vector3(y, 0, x), Quaternion.identity).transform);
-                    transforms[transforms.Count - 1].GetComponent<Flower>().x = x;
-                    transforms[transforms.Count - 1].GetComponent<Flower>().y = y;
-                    if (matrix[x, y+1] != playerColor)
-                    {
-                        startLine = false;
-                    }
-                }
-
-            }
-        }
-        return transforms.ToArray();
-    }
-    public int GetMaxX(int yPos,int player)
-    {
-        int mayor = -1;
-        for (int x = 0; x < 10; x++)
+            return i;
+        }else
         {
-            for (int y = 0; y < 10; y++)
-            {
-                if (x > mayor && matrix[x, y] == player && y==yPos)
-                {
-                    mayor = x;
-                }
-            }
+            return supposedStart;
         }
-        return mayor;
-    }
-    public int GetTop(int player)
-    {
-        int menor = 11;
-        for (int x = 0; x < 10; x++)
-        {
-            for (int y = 0; y < 10; y++)
-            {
-                if (y<menor && matrix[x,y]==player)
-                {
-                    menor = y;
-                }
-            }
-        }
-        return menor;
-    }
-    public int GetBottom(int player)
-    {
-        int menor = -1;
-        for (int x = 0; x < 10; x++)
-        {
-            for (int y = 0; y < 10; y++)
-            {
-                if (y > menor && matrix[x, y] == player)
-                {
-                    menor = y;
-                }
-            }
-        }
-        return menor;
     }
 }
