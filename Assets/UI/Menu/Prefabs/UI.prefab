@@ -72,7 +72,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 14.140198, y: 0}
+  m_AnchoredPosition: {x: 14.140198, y: -2.0700998}
   m_SizeDelta: {x: 28.280396, y: 8.2804}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7657382147371412778
@@ -148,7 +148,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.000011444092, y: -0.8300003}
+  m_AnchoredPosition: {x: 0.000011444092, y: -0.8299999}
   m_SizeDelta: {x: 0, y: -0.54000056}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8601257525856015547
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0
+  m_FillAmount: 0.5
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -299,7 +299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0000038146973, y: 0}
+  m_AnchoredPosition: {x: -13.900002, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7887063459775379410
@@ -389,7 +389,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -587,7 +587,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.000011444092, y: -0.8300003}
+  m_AnchoredPosition: {x: 0.000011444092, y: -0.8299999}
   m_SizeDelta: {x: 0, y: -0.54000056}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8826361598081488186
@@ -662,7 +662,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2045,7 +2045,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -5, y: 0.000012397766}
+  m_AnchoredPosition: {x: 10.796898, y: 0.000012397766}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8826361598441127503
@@ -3312,8 +3312,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6619b344c2271d04a9a3009414bfb5de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioListener: {fileID: 0}
   slider: {fileID: 4580424691494088378}
-  sliderValue: 0
+  sliderValue: 0.5
   imageSilence: {fileID: 8826361599132362500}
 --- !u!114 &8826361598800622486
 MonoBehaviour:
@@ -3341,7 +3342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3cc457c0ab823945b450d598b083fca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slider: {fileID: 0}
+  slider: {fileID: 8826361598753455607}
   sliderValue: 0.5
   panelBrillo: {fileID: 8826361599539823385}
   valorBlack: 0
@@ -3396,7 +3397,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 23.5, y: 0}
+  m_AnchoredPosition: {x: -8.300003, y: -2.1301003}
   m_SizeDelta: {x: 28.2804, y: 8.2804}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8826361598812346209
@@ -3852,7 +3853,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8826361598983119763
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3985,7 +3986,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 573e6d2e6680d814d9f2a357d2c45455, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -5599,8 +5600,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8826361598105699131}
   m_HandleRect: {fileID: 8826361598105699130}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.8133332
+  m_Value: 1
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

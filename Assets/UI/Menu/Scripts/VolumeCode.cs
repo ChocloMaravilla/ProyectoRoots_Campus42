@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class VolumeCode : MonoBehaviour
 {
+    [SerializeField] private AudioListener audioListener;
     public Slider slider;
     public float sliderValue;
     public Image imageSilence;

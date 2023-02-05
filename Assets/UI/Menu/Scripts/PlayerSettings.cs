@@ -19,6 +19,7 @@ public class PlayerSettings : MonoBehaviour
 
     public void SetVolumePref()
     {
+        //Debug.Log(volume.value);
         PlayerPrefs.SetFloat("volumeAudio", volume.value);
     }
 
