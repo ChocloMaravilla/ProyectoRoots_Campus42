@@ -152,6 +152,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ee6183c1ab4a614f863e58d6b3d15af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnCasilla: {fileID: 1514115889098809935, guid: 86ed4454991fac44c896ef124a7e1d82,
+    type: 3}
+  basicsCasilla: {fileID: 3547300124337069326, guid: 81ca730497017934e87e00cb377a6073,
+    type: 3}
+  cesped: {fileID: 919132149155446097, guid: 718eb94bd979a714bb96cc23de72c916, type: 3}
+  pupCasilla: {fileID: 1900238001741096839, guid: 2e61d1a94ddb899459961bd0215b98d7,
+    type: 3}
+  spikeCasilla: {fileID: 5331077810909274546, guid: f62b55a39827b794b9bc85377e67c874,
+    type: 3}
   cube: {fileID: 7698251298755762363, guid: 3e0ed6ee7bb91764a9c3a15493a6f64b, type: 3}
   player: {fileID: 2075649114}
 --- !u!4 &477107582
