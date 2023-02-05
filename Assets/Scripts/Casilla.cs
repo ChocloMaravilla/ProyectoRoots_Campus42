@@ -5,26 +5,13 @@ using UnityEngine;
 public class Casilla
 {
     public Types types;
-    public Bonus bonus;
-    public PowerUp powerUp;
     public Owner owner;
 }
 
 public enum Types
 {
-    None, Spawn, Basics
+    None, Spawn, Basics,PowerUp,Spike
 }
-
-public enum Bonus
-{
-    None, x2
-}
-
-public enum PowerUp
-{
-    None, x2Speed
-}
-
 public enum Owner
 {
     None, Blue, Red, Grean, Yellow

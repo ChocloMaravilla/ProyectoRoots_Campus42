@@ -52,7 +52,7 @@ public class Entities : MonoBehaviour
         if (IsThereAFlower())
         {
             print("hola");
-            Transform[] trans = matriz.GetSequence(flor, 2);
+            Transform[] trans = matriz.GetSequence(flor, 1);
             for (int i = 0; i < trans.Length; i++)
             {
                 floresHistory.Add(trans[i]);
@@ -164,7 +164,7 @@ public class Entities : MonoBehaviour
             default:
                 break;
         }
-        matriz.matrix[coordX, coordY] = 2;
+        matriz.matriz[coordX, coordY].owner=Owner.Blue;
     }
 }
 public enum Direction

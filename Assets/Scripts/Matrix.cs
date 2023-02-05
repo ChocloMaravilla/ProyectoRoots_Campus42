@@ -9,22 +9,22 @@ public class Matrix : MonoBehaviour
 {
     public GameObject cube;
     public Player player;
-    public int[,] matrix = new int[10, 10]
-    {{0,0,0,0,0,0,0,0,1,0},
-    {1,1,1,1,1,1,1,1,1,0},
-    {0,1,1,1,1,1,1,1,1,0},
-    {0,1,1,1,1,1,1,1,1,0},
-    {0,1,1,1,1,1,1,1,1,0},
-    {0,1,1,1,1,1,1,1,1,0},
-    {0,1,1,1,1,1,1,1,1,0},
-    {0,1,1,1,1,1,1,1,1,0},
-    {0,1,1,1,1,1,1,1,1,1},
-    {0,1,0,0,0,0,0,0,0,0}};
-    public Casilla[,] matriz;
-
+    public int[,] matrix;
+    public Casilla[,] matriz=new Casilla[20,20];
+    public BoardData data = new BoardData();
     // Start is called before the first frame update
     void Start()
     {
+        data.LoadFromFile("11.json");
+        matrix=data.GetRawTileMatrix();
+        for (int x = 0; x < 20; x++)
+        {
+            for (int y = 0; y < 20; y++)
+            {
+                matriz[x, y] = new Casilla();
+                matriz[x, y].types = (Types)matrix[x, y];
+            }
+        }
         InstantiateDebugMap();
     }
 
@@ -35,15 +35,32 @@ public class Matrix : MonoBehaviour
     }
     public void InstantiateDebugMap()
     {
-        float lastX = 0;
-        float lastY = 0;
-        for (int y = 0; y < 10; y++)
+        for (int y = 0; y < 20; y++)
         {
-            for (int x = 0; x < 10; x++)
+            for (int x = 0; x < 20; x++)
             {
-                if (matrix[x,y]==1)
+                switch (matriz[x,y].types)
                 {
-                    Instantiate(cube,new Vector3(x,0,y),Quaternion.identity);
+                    case Types.None:
+                        break;
+                    case Types.Spawn:
+                        GameObject newCasilla=Instantiate(cube, new Vector3(x, 0, y), Quaternion.identity);
+                        newCasilla.GetComponent<MeshRenderer>().material.color = Color.yellow;
+                        break;
+                    case Types.Basics:
+                        GameObject newCasilla2 = Instantiate(cube, new Vector3(x, 0, y), Quaternion.identity);
+                        newCasilla2.GetComponent<MeshRenderer>().material.color = Color.green;
+                        break;
+                    case Types.PowerUp:
+                        GameObject newCasilla3 = Instantiate(cube, new Vector3(x, 0, y), Quaternion.identity);
+                        newCasilla3.GetComponent<MeshRenderer>().material.color = Color.blue;
+                        break;
+                    case Types.Spike:
+                        GameObject newCasilla4= Instantiate(cube, new Vector3(x, 0, y), Quaternion.identity);
+                        newCasilla4.GetComponent<MeshRenderer>().material.color = Color.red;
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -51,9 +68,9 @@ public class Matrix : MonoBehaviour
     public void PrintMap()
     {
         string linea = "";
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 20; i++)
         {
-            for (int j = 0; j < 10; j++)
+            for (int j = 0; j < 20; j++)
             {
                 linea = linea + matrix[i,j];
             }
@@ -74,7 +91,7 @@ public class Matrix : MonoBehaviour
                 {
                     if (player.GetFlower(z,i)==null)
                     {
-                        matrix[z, i] = playerColor;
+                        matriz[z, i].owner = (Owner)playerColor;
                         transforms.Add(Instantiate(flor, new Vector3(i, 0, z), Quaternion.identity).transform);
                         transforms[transforms.Count - 1].GetComponent<Flower>().x = z;
                         transforms[transforms.Count - 1].GetComponent<Flower>().y = i;
@@ -98,11 +115,11 @@ public class Matrix : MonoBehaviour
                 int temp = ar[1];
                 bool init = false;
                 int type = -1;
-                if (matrix[ar[1]+1, y] == playerColor && !init)
+                if (matriz[ar[1]+1, y].owner == (Owner)playerColor && !init)
                 {
                     type = 0;
                 }
-                else if (matrix[ar[1] + 1, y] != playerColor && !init)
+                else if (matriz[ar[1] + 1, y].owner != (Owner)playerColor && !init)
                 {
                     type = 2;
                 }
@@ -111,7 +128,7 @@ public class Matrix : MonoBehaviour
                     case 0:
                         for (int i = ar[1] + 1; i < 10; i++)
                         {
-                            if (matrix[i, y] != playerColor || i >= 9)
+                            if (matriz[i, y].owner != (Owner)playerColor || i >= 9)
                             {
                                 temp= i-1;
                                 break;
@@ -121,7 +138,7 @@ public class Matrix : MonoBehaviour
                     case 2:
                         for (int i = ar[1] + 1; i < 10; i++)
                         {
-                            if (matrix[i, y] == playerColor)
+                            if (matriz[i, y].owner == (Owner)playerColor)
                             {
                                 temp= i;
                                 break;
@@ -151,7 +168,7 @@ public class Matrix : MonoBehaviour
         {
             for (int i = startX; i < 10; i++)
             {
-                if (!init && matrix[i, y] == player)
+                if (!init && matriz[i, y].owner == (Owner)player)
                 {
                     ints[0] = Initial(i,y,player);
                     init = true;
@@ -170,11 +187,11 @@ public class Matrix : MonoBehaviour
     {
         bool init = false;
         int type = -1;
-        if (matrix[start+1, y] == player && !init)
+        if (matriz[start+1, y].owner == (Owner)player && !init)
         {
             type = 0;
         }
-        else if (matrix[start+1, y] != player && !init)
+        else if (matriz[start+1, y].owner != (Owner)player && !init)
         {
             type = 2;
         }
@@ -183,7 +200,7 @@ public class Matrix : MonoBehaviour
             case 0:
                 for (int i = start+1; i < 10; i++)
                 {
-                    if (matrix[i,y]!=player || i>=9)
+                    if (matriz[i,y].owner!=(Owner)player || i>=9)
                     {
                         return i-1;
                     }
@@ -192,7 +209,7 @@ public class Matrix : MonoBehaviour
             case 2:
                 for (int i = start+1; i < 10; i++)
                 {
-                    if (matrix[i, y] == player)
+                    if (matriz[i, y].owner == (Owner)player)
                     {
                         return i;
                     }else if (i>=9)
